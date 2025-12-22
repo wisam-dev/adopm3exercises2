@@ -28,11 +28,7 @@ public class EmployeeList : IEmployeeList, ISeed<EmployeeList>, IEnumerable<IEmp
         }
     }
 
-    public IEnumerator<IEmployee> GetEnumerator()
-    {
-        foreach (var emp in _employees)
-            yield return emp;
-    }
+    public IEnumerator<IEmployee> GetEnumerator() => _employees.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
