@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Enumerable1.Employees;
 using Models.Employees;
+using Models.Employees.Enumerable1.Employees;
 using Models.Employees.Interfaces;
 using Seido.Utilities.SeedGenerator;
 
