@@ -9,6 +9,7 @@
   <Project Path="Event1\Event1.csproj" />
   <Project Path="Event2\Event2.csproj" />
   <Project Path="Event3\Event3.csproj" />
+  <Project Path="Extensions1/Extensions1.csproj" />
   <Project Path="Lambda0\Lambda0.csproj" />
   <Project Path="Lambda2\Lambda2.csproj" />
   <Project Path="Linq_Orders\Linq_Orders.csproj" />
