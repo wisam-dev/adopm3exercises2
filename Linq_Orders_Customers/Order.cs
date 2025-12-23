@@ -25,9 +25,10 @@ namespace Linq_Orders_Customers
 
         //Implement due to legacy reasons
         public override bool Equals(object obj) => Equals(obj as IOrder);
+
         public override int GetHashCode() => OrderID.GetHashCode();
         #endregion
- 
+
         #region Class Factory for creating an instance filled with Random data
         public static class Factory
         {
@@ -49,14 +50,14 @@ namespace Linq_Orders_Customers
                         var OrderDate = new DateTime(year, month, day);
                         var DeliveryDate = OrderDate + new TimeSpan(rnd.Next(1, 31), 0, 0, 0);
 
-                        var order = new Order (CustomerID)
+                        var order = new Order(CustomerID)
                         {
                             OrderID = Guid.NewGuid(),
                             NrOfArticles = NrOfArticles,
                             Value = Value,
                             Freight = Freight,
                             OrderDate = OrderDate,
-                            DeliveryDate = DeliveryDate
+                            DeliveryDate = DeliveryDate,
                         };
 
                         return order;
@@ -67,18 +68,20 @@ namespace Linq_Orders_Customers
         }
         #endregion
 
-        public override string ToString() => $"{OrderID}: Value: {Value:C2} OrderDate: {OrderDate:d} DeliverDate: {DeliveryDate:d} CustomerID: {CustomerID}";
+        public override string ToString() =>
+            $"{OrderID}: Value: {Value:C2} OrderDate: {OrderDate:d} DeliverDate: {DeliveryDate:d} CustomerID: {CustomerID}";
 
         //For the serialization only
-        public Order() {}
-        public Order (Guid CustomerID)
+        public Order() { }
+
+        public Order(Guid CustomerID)
         {
             this.OrderID = Guid.NewGuid();
             this.CustomerID = CustomerID;
         }
 
         #region copy constructor
-        public Order (IOrder src)
+        public Order(IOrder src)
         {
             NrOfArticles = src.NrOfArticles;
             Value = src.Value;

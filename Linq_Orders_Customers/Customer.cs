@@ -21,10 +21,12 @@ namespace Linq_Orders_Customers
 
         //Implement due to legacy reasons
         public override bool Equals(object obj) => Equals(obj as ICustomer);
+
         public override int GetHashCode() => CustomerID.GetHashCode();
         #endregion
 
-        public override string ToString() => $"{CustomerID}: {FirstName} {LastName}, {Adress}, {ZipCode}, {Country}";
+        public override string ToString() =>
+            $"{CustomerID}: {FirstName} {LastName}, {Adress}, {ZipCode}, {Country}";
 
         #region Class Factory for creating an instance filled with Random data
         public static class Factory
@@ -36,20 +38,29 @@ namespace Linq_Orders_Customers
                 {
                     try
                     {
-                        string[] _firstnames = "Fred John Mary Jane Oliver Marie Per Thomas Ann Susanne".Split(' ');
+                        string[] _firstnames =
+                            "Fred John Mary Jane Oliver Marie Per Thomas Ann Susanne".Split(' ');
                         var FirstName = _firstnames[rnd.Next(0, _firstnames.Length)];
 
-                        string[] _lastnames = "Johnsson Pearsson Smith Ewans Andersson Svensson Shultz Perez".Split(' ');
+                        string[] _lastnames =
+                            "Johnsson Pearsson Smith Ewans Andersson Svensson Shultz Perez".Split(
+                                ' '
+                            );
                         var LastName = _lastnames[rnd.Next(0, _lastnames.Length)];
 
-                        string[] _adress = "Backvagen, Ringvagen, Box, Smith street, Graaf strasse, Vasagatan, Odenplan, Birger Jarlsgatan".Split(',');
-                        var Adress = _adress[rnd.Next(0, _adress.Length)].Trim() + " " + rnd.Next(1, 100);
+                        string[] _adress =
+                            "Backvagen, Ringvagen, Box, Smith street, Graaf strasse, Vasagatan, Odenplan, Birger Jarlsgatan".Split(
+                                ','
+                            );
+                        var Adress =
+                            _adress[rnd.Next(0, _adress.Length)].Trim() + " " + rnd.Next(1, 100);
 
                         var ZipCode = rnd.Next(10000, 99999);
 
-                        string[] _country = "Sverige Norge Finland Lettland Tyskland Spanien".Split(' ');
+                        string[] _country = "Sverige Norge Finland Lettland Tyskland Spanien".Split(
+                            ' '
+                        );
                         var Country = _country[rnd.Next(0, _country.Length)];
-
 
                         int year = rnd.Next(1940, DateTime.Today.Year - 20);
                         int month = rnd.Next(1, 13);
@@ -61,9 +72,10 @@ namespace Linq_Orders_Customers
                             CustomerID = Guid.NewGuid(),
                             FirstName = FirstName,
                             LastName = LastName,
+                            Adress = Adress,
                             ZipCode = ZipCode,
                             Country = Country,
-                            BirthDate = BirthDate
+                            BirthDate = BirthDate,
                         };
 
                         return customer;
@@ -78,6 +90,7 @@ namespace Linq_Orders_Customers
         {
             this.CustomerID = Guid.NewGuid();
         }
+
         public Customer(ICustomer src)
         {
             FirstName = src.FirstName;
