@@ -28,10 +28,12 @@ namespace Linq_Orders
 
         //Implement due to legacy reasons
         public override bool Equals(object obj) => Equals(obj as IOrder);
+
         public override int GetHashCode() => OrderID.GetHashCode();
         #endregion
 
-        public override string ToString() => $"{OrderID}: Value: {Value:C2} OrderDate: {OrderDate:d} DeliverDate: {DeliveryDate:d} Country: {Country}\n";
+        public override string ToString() =>
+            $"{OrderID}: Value: {Value:C2} OrderDate: {OrderDate:d} NumberOfArticles: {NrOfArticles} DeliverDate: {DeliveryDate:d} Country: {Country}\n";
 
         #region Class Factory for creating an instance filled with Random data
         public static class Factory
@@ -49,7 +51,9 @@ namespace Linq_Orders
                         string[] _lastnames = "Johnsson Pearsson Smith Ewans Andersson".Split(' ');
                         var LastName = _lastnames[rnd.Next(0, _lastnames.Length)];
 
-                        string[] _country = "Sverige Norge Finland Lettland Tyskland Spanien".Split(' ');
+                        string[] _country = "Sverige Norge Finland Lettland Tyskland Spanien".Split(
+                            ' '
+                        );
                         var Country = _country[rnd.Next(0, _country.Length)];
 
                         var NrOfArticles = rnd.Next(1, 51);
@@ -73,9 +77,9 @@ namespace Linq_Orders
                             Value = Value,
                             Freight = Freight,
                             OrderDate = OrderDate,
-                            DeliveryDate = DeliveryDate
+                            DeliveryDate = DeliveryDate,
                         };
-                        
+
                         return order;
                     }
                     catch { }
@@ -84,11 +88,12 @@ namespace Linq_Orders
         }
         #endregion
 
-        public Order ()
+        public Order()
         {
             this.OrderID = Guid.NewGuid();
         }
-        public Order (Order src)
+
+        public Order(Order src)
         {
             FirstName = src.FirstName;
             LastName = src.LastName;

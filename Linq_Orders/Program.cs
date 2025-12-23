@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualBasic;
 
 namespace Linq_Orders
 {
@@ -8,14 +9,82 @@ namespace Linq_Orders
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+
             List<IOrder> OrderList = new List<IOrder>();
             for (int i = 0; i < 50; i++)
-            {
                 OrderList.Add(Order.Factory.CreateWithRandomData());
-            }
 
             Console.WriteLine($"OrderCount: {OrderList.Count()}");
-         }
+            Console.WriteLine($"OrderSum: {Math.Round(OrderList.Sum(o => o.Total), 2)} SEK");
+
+            Console.WriteLine($"Biggest 5:");
+            OrderList
+                .OrderByDescending(o => o.NrOfArticles)
+                .Take(5)
+                .ToList()
+                .ForEach(Console.WriteLine);
+
+            Console.WriteLine($"OrderCountUnder 1000kr: {OrderList.Count(o => o.Total < 1000)}");
+
+            Console.WriteLine(
+                $"OrderFrieghtSum: {Math.Round(OrderList.Where(o => o.Total < 1000).Sum(o => o.Freight), 2)} SEK"
+            );
+
+            Console.WriteLine($"AllCountries:");
+            OrderList
+                .Select(o => o.Country)
+                .Distinct()
+                .ToList()
+                .ForEach(c => Console.Write($"{c} "));
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                $"OrdersDeliveredLate: {OrderList.Count(o => o.DeliveryDate.HasValue && (o.DeliveryDate.Value.Date - o.OrderDate.Date).TotalDays > 15)}"
+            );
+            Console.WriteLine(
+                $"ordersInFinland: {OrderList.Where(o => o.Country == "Finland").Count()}"
+            );
+            Console.WriteLine($"orderSumInFinland: ");
+            OrderList
+                .Where(o => o.Country == "Finland")
+                .ToList()
+                .ForEach(o => Console.Write($"{Math.Round(o.Total, 2)} SEK, "));
+
+            Console.WriteLine("Grouped By Country");
+            OrderList
+                .GroupBy(o => o.Country)
+                .Select(o => new
+                {
+                    country = o.Key,
+                    count = o.Count(),
+                    total = o.Sum(o => o.Total),
+                })
+                .ToList()
+                .ForEach(x =>
+                    Console.WriteLine($"Country: {x.country}, Count: {x.count}, Total: {x.total}")
+                );
+
+            Console.WriteLine("5 Largest By Country");
+            OrderList
+                .GroupBy(o => o.Country)
+                .Select(o => new
+                {
+                    country = o.Key,
+                    items = o.OrderByDescending(o => o.NrOfArticles).Take(5).ToList(),
+                })
+                .ToList()
+                .ForEach(x =>
+                {
+                    Console.WriteLine($"Country: {x.country}, Largest Orders:");
+                    x.items.ForEach(Console.WriteLine);
+                });
+
+            Console.WriteLine(
+                $"AverageDeliveryTime: {Math.Round(OrderList.Average(o => (o.DeliveryDate.Value.Date - o.OrderDate.Date).TotalDays))} days"
+            );
+        }
     }
 }
 //Exercises:
