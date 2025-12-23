@@ -12,11 +12,11 @@ namespace Linq_ShallowVsDeepCopy
             collection.ToList().ForEach(item => Console.WriteLine(item));
         }
     }
- 
+
     class Program
     {
         const int NrOfCustomers = 10_000;
- 
+
         static void Main(string[] args)
         {
             //Create Order and customer Lists
@@ -29,21 +29,24 @@ namespace Linq_ShallowVsDeepCopy
                 CustomerList.Add(cus);
             }
 
- 
             // Oldest Customer in Sweden
-            var oldestCustomerSweden = CustomerList.Where(c => c.Country == "Sverige")
-                .OrderByDescending(c => c.BirthDate).First();
+            var oldestCustomerSweden = CustomerList
+                .Where(c => c.Country == "Sverige")
+                .OrderByDescending(c => c.BirthDate)
+                .First();
             Console.WriteLine($"Oldest customer in Sweden:\n{oldestCustomerSweden}");
-
 
             //All customers in Sweden
 
             #region exercise 1
             //Shallow copy - default in Linq
-            var custSweden = CustomerList.Where(c => c.Country == "Sverige");
+            // var custSweden = CustomerList.Where(c => c.Country == "Sverige");
 
             //Deep copy - and force Linq to enumerate
-            //var custSweden = CustomerList.Where(c => c.Country == "Sverige").Select(c => new Customer(c)).ToList();
+            var custSweden = CustomerList
+                .Where(c => c.Country == "Sverige")
+                .Select(c => new Customer(c))
+                .ToList();
             #endregion
 
             //Do something with the list
@@ -54,8 +57,6 @@ namespace Linq_ShallowVsDeepCopy
 
             //Do something again with the list
             CustomerCountPerCountry(custSweden);
-
-
         }
 
         private static void CustomerCountPerCountry(IEnumerable<Customer> cus)
