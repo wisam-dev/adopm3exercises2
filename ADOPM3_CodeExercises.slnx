@@ -12,6 +12,7 @@
   <Project Path="Extensions1/Extensions1.csproj" />
   <Project Path="Lambda0\Lambda0.csproj" />
   <Project Path="Lambda2\Lambda2.csproj" />
+  <Project Path="Linq_Music/Linq_Music.csproj" />
   <Project Path="Linq_Orders\Linq_Orders.csproj" />
   <Project Path="Linq_Orders_Customers\Linq_Orders_Customers.csproj" />
   <Project Path="Linq_ShallowVsDeepCopy\Linq_ShallowVsDeepCopy.csproj" />
