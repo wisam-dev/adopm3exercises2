@@ -4,7 +4,9 @@
     {
         static void Main(string[] args)
         {
-            Task<string> t1 = null, t2 = null, t3 = null;
+            Task<string> t1 = null,
+                t2 = null,
+                t3 = null;
             try
             {
                 string Message = "hello";
@@ -28,14 +30,12 @@
                 {
                     for (int i = 0; i < 10; i++)
                     {
-
                         Console.WriteLine($"{Message}{i} from Task2");
                         Task.Delay(1000);
                         if (i == 5)
                         {
                             throw new Exception("Task2 has faulted");
                         }
-
                     }
                     return "Task2 has completed";
                 });

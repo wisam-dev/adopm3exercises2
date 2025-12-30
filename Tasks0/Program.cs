@@ -7,22 +7,52 @@ namespace Task0
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+
             var watch = new Stopwatch();
             watch.Start();
 
             //Create Task t1
-            //Your Code
+            var t1 = Task.Run(() =>
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"Hello{i} from Thread1");
+                    Thread.Sleep(2000);
+                }
+            });
+            // t1.Wait();
 
             //Create Task t2
-            //Your Code
+            var t2 = Task.Run(() =>
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"Hello{i} from Thread2");
+                    Thread.Sleep(1000);
+                }
+            });
 
             //Create Task t3
-            //Your Code
+            var t3 = Task.Run(() => PrintHelloAsync(0.5));
+            t3.Wait();
 
-            //Task.WaitAll(t1, t2, t3);
+            Task.WaitAll(t1, t2, t3);
 
             watch.Stop();
-            Console.WriteLine($"Main terminated. Execution time: {watch.ElapsedMilliseconds}ms");
+            Console.WriteLine($"Main terminated. Execution time: {watch.ElapsedMilliseconds:N0}ms");
+        }
+
+        static void PrintHelloAsync(double delay) => Task.Run(() => PrintHello(delay));
+
+        static void PrintHello(double secDelay)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine($"Hello{i} from Thread3");
+                Thread.Sleep((int)(secDelay * 1000));
+            }
         }
     }
 }
