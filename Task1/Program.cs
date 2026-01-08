@@ -4,6 +4,8 @@
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+
             Task<string> t1 = null,
                 t2 = null,
                 t3 = null;
@@ -59,6 +61,7 @@
             catch (Exception ex)
             {
                 //Your code
+                Console.WriteLine(ex.Message);
             }
             finally
             {
